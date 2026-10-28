@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOS - Jasa Outdoor Service</title>
+    <meta name="description" content="Layanan jasa outdoor profesional: Fotografi, Videografi, dan Sewa Alat.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           1. RESET & VARIABLES
+           ========================================= */
+        :root {
+            --primary-color: #FF6B00; /* Orange JOS */
+            --secondary-color: #1a1a1a;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f9f9f9;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+        button { cursor: pointer; border: none; outline: none; }
+
+        /* =========================================
+           2. HEADER & NAVIGATION
+           ========================================= */
+        header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+        }
+
+        /* =========================================
+           3. HERO SECTION
+           ========================================= */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('data:image/jpeg;base64,/9j/4AAQSkZJRgAB...'); /* Placeholder untuk base64 asli */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #e65c00;
+            transform: translateY(-2px);
+        }
+
+        /* =========================================
+           4. SECTIONS GENERAL
+           ========================================= */
+        section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title span {
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* =========================================
+           5. SERVICES / LAYANAN
+           ========================================= */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* =========================================
+           6. BOOKING FORM
+           ========================================= */
+        .booking-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+
+        .price-display {
+            background: #fff3e0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .price-display h3 {
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        /* =========================================
+           7. FOOTER
+           ========================================= */
+        footer {
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* =========================================
+           8. RESPONSIVE
+           ========================================= */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Mobile menu logic handled by JS */
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Utility Classes for Hiding/Showing Sections */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-camera-retro"></i> JOS
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" onclick="showPage('home')" class="active">Beranda</a></li>
+                <li><a href="#" onclick="showPage('services')">Layanan</a></li>
+                <li><a href="#" onclick="showPage('shop')">Toko</a></li>
+                <li><a href="#" onclick="showPage('booking')">Booking</a></li>
+                <li><a href="#" onclick="showPage('contact')">Kontak</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main>
+        
+        <!-- HOME PAGE -->
+        <div id="home" class="page-section active">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Abadikan Momen Terbaikmu</h1>
+                    <p>Jasa Fotografi, Videografi, dan Sewa Alat Profesional</p>
+                    <button class="btn-primary" onclick="showPage('booking')">Booking Sekarang</button>
+                </div>
+            </section>
+
+            <section id="features">
+                <div class="section-title">
+                    <h2>Kenapa Memilih Kami?</h2>
+                    <span></span>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <i class="fas fa-camera service-icon"></i>
+                        <h3>Kualitas Tinggi</h3>
+                        <p>Menggunakan peralatan terbaru untuk hasil maksimal.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-clock service-icon"></i>
+                        <h3>Tepat Waktu</h3>
+                        <p>Kami menghargai waktu Anda dengan pelayanan cepat.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-tags service-icon"></i>
+                        <h3>Harga Terjangkau</h3>
+                        <p>Paket fleksibel sesuai dengan budget Anda.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- SERVICES PAGE -->
+        <div id="services" class="page-section">
+            <section>
+                <div class="section-title">
+                    <h2>Layanan Kami</h2>
+                    <span></span>
+                </div>
+                <div class="services-grid">
+                    <!-- Service Item 1 -->
+                    <div class="service-card">
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgAB..." alt="Fotografi" style="border-radius: 10px; margin-bottom: 1rem;">
+                        <h3>Fotografi Event</h3>
+                        <p>Dokumentasi acara pernikahan, ulang tahun, dan gathering.</p>
+                        <button class="btn-primary" style="margin-top: 1rem;" onclick="selectService('foto')">Pilih Paket</button>
+                    </div>
+                    <!-- Service Item 2 -->
+                    <div class="service-card">
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgAB..." alt="Videografi" style="border-radius: 10px; margin-bottom: 1rem;">
+                        <h3>Videografi Cinematic</h3>
+                        <p>Video profil perusahaan, klip musik, atau dokumenter.</p>
+                        <button class="btn-primary" style="margin-top: 1rem;" onclick="selectService('video')">Pilih Paket</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- SHOP PAGE -->
+        <div id="shop" class="page-section">
+            <section>
+                <div class="section-title">
+                    <h2>Toko Sewa Alat</h2>
+                    <span></span>
+                </div>
+                <div class="services-grid" id="shop-container">
+                    <!-- Shop items will be injected by JS -->
+                </div>
+            </section>
+        </div>
+
+        <!-- BOOKING PAGE -->
+        <div id="booking" class="page-section">
+            <section>
+                <div class="section-title">
+                    <h2>Form Booking</h2>
+                    <span></span>
+                </div>
+                <div class="booking-container">
+                    <form id="bookingForm" onsubmit="handleBooking(event)">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" class="form-control" id="nama" required placeholder="Masukkan nama Anda">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Nomor WhatsApp</label>
+                            <input type="tel" class="form-control" id="whatsapp" required placeholder="08xxxxxxxxxx">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Jenis Layanan</label>
+                            <select class="form-control" id="jenisLayanan" onchange="calculatePrice()">
+                                <option value="">-- Pilih Layanan --</option>
+                                <option value="foto_basic">Fotografi Basic (Rp 500.000)</option>
+                                <option value="foto_premium">Fotografi Premium (Rp 1.500.000)</option>
+                                <option value="video_basic">Videografi Basic (Rp 1.000.000)</option>
+                                <option value="sewa_kamera">Sewa Kamera Harian (Rp 200.000)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tanggal Booking</label>
+                            <input type="date" class="form-control" id="tanggal" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Catatan Tambahan</label>
+                            <textarea class="form-control" id="catatan" rows="3" placeholder="Detail lokasi, durasi, dll"></textarea>
+                        </div>
+
+                        <div class="price-display">
+                            <p>Estimasi Total Harga:</p>
+                            <h3 id="totalHarga">Rp 0</h3>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1.5rem;">
+                            <i class="fab fa-whatsapp"></i> Kirim via WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- CONTACT PAGE -->
+        <div id="contact" class="page-section">
+            <section>
+                <div class="section-title">
+                    <h2>Hubungi Kami</h2>
+                    <span></span>
+                </div>
+                <div class="services-grid" style="text-align: center;">
+                    <div class="service-card">
+                        <i class="fas fa-map-marker-alt service-icon"></i>
+                        <h3>Alamat</h3>
+                        <p>Jl. Contoh No. 123, Jakarta Selatan</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-phone service-icon"></i>
+                        <h3>Telepon</h3>
+                        <p>+62 812-3456-7890</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-envelope service-icon"></i>
+                        <h3>Email</h3>
+                        <p>info@jos-service.com</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>JOS Service</h3>
+                <p>Partner terbaik untuk kebutuhan dokumentasi dan sewa alat outdoor Anda.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Link Cepat</h3>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">Beranda</a></li>
+                    <li><a href="#" onclick="showPage('services')">Layanan</a></li>
+                    <li><a href="#" onclick="showPage('booking')">Booking</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Ikuti Kami</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 JOS Service. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Data Produk Toko (Contoh)
+        const products = [
+            { id: 1, name: "Canon EOS R6", price: 350000, img: "data:image/jpeg;base64,..." },
+            { id: 2, name: "Sony A7III", price: 300000, img: "data:image/jpeg;base64,..." },
+            { id: 3, name: "DJI Mavic Air 2", price: 250000, img: "data:image/jpeg;base64,..." }
+        ];
+
+        // Inisialisasi Halaman
+        document.addEventListener('DOMContentLoaded', () => {
+            renderShop();
+            // Set min date to today
+            const dateInput = document.getElementById('tanggal');
+            if(dateInput) {
+                dateInput.min = new Date().toISOString().split("T")[0];
+            }
+        });
+
+        // Navigasi Halaman (SPA Simple)
+        function showPage(pageId) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            const target = document.getElementById(pageId);
+            if(target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update Nav Active State
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                // Simple check if onclick contains the pageId
+                if(link.getAttribute('onclick').includes(pageId)) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Close mobile menu if open
+    
