@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOS - Jasa Orang Suruhan</title>
+    <style>
+        /* --- RESET & VARIABEL --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #0056b3;
+            --dark-blue: #003366;
+            --light-blue: #e6f0fa;
+            --accent-orange: #ff9900;
+            --text-dark: #333;
+            --text-gray: #666;
+            --bg-gray: #f4f6f9;
+        }
+
+        body {
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            padding: 20px;
+        }
+
+        /* --- LAYOUT UTAMA (3 Kolom) --- */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- KARTU / PANEL --- */
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER ATAS (Logo & Menu) --- */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            background: #fff;
+        }
+
+        .header-top .nav-text {
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo-area img {
+            height: 30px; /* Placeholder logo */
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary-blue);
+            font-style: italic;
+        }
+
+        .logo-text span {
+            color: var(--accent-orange);
+        }
+
+        .online-badge {
+            background: #00c853;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .menu-icon {
+            font-size: 20px;
+            color: var(--primary-blue);
+            cursor: pointer;
+        }
+
+        /* --- HERO IMAGE SECTION --- */
+        .hero {
+            position: relative;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 15px;
+            color: white;
+        }
+
+        .hero-blue {
+            background-image: linear-gradient(to top, rgba(0, 86, 179, 0.9), rgba(0, 86, 179, 0.2)), url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+            /* Ganti URL di atas dengan gambar asli jika punya */
+        }
+        
+        .hero-layanan {
+            background-image: linear-gradient(to top, rgba(0, 86, 179, 0.9), rgba(0, 86, 179, 0.2)), url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+        }
+
+        .hero-toko {
+            background-image: linear-gradient(to top, rgba(0, 86, 179, 0.9), rgba(0, 86, 179, 0.2)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+        }
+
+        .hero h2 {
+            font-size: 20px;
+            font-weight: 800;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        /* --- KONTEN DALAM KARTU --- */
+        .content {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .section-title {
+            color: var(--primary-blue);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .desc-text {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        /* --- LIST MANFAAT --- */
+        .benefit-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .benefit-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 12px;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .benefit-list li::before {
+            content: "✔";
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        /* --- KATEGORI LAYANAN (3 Icon) --- */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .category-item {
+            background: var(--light-blue);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--dark-blue);
+            cursor: pointer;
+            border: 1px solid #cce0ff;
+            transition: 0.2s;
+        }
+
+        .category-item:hover {
+            background: #d0e4ff;
+        }
+
+        .category-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* --- BANNER BAWAH --- */
+        .bottom-banner {
+            background: linear-gradient(135deg, var(--primary-blue), #007bff);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: auto;
+        }
+
+        /* --- TAB FILTER (Layanan) --- */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .tab {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        /* --- GRID LAYANAN (2 Kolom) --- */
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .service-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 8px;
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            background: #ddd;
+        }
+
+        .service-card p {
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 5px;
+            color: var(--text-dark);
+        }
+
+        /* --- TOKO JOS (PRODUK) --- */
+        .product-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .prod-tab {
+            padding: 8px 15px;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--text-gray);
+            cursor: pointer;
+        }
+
+        .prod-tab.active {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--primary-blue);
+            margin-bottom: -2px;
+        }
+
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border: 1px solid #eee;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .product-img {
+            width: 80px;
+            height: 80px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .product-info h4 {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .product-info p {
+            font-size: 11px;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+        }
+
+        .price {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--primary-blue);
+        }
+
+        .btn-lihat {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ================= KARTU 1: BERANDA ================= -->
+    <div class="card">
+        <!-- Header -->
+        <div class="header-top">
+            <div class="nav-text">Beranda</div>
+            <div class="logo-area">
+                <div class="logo-text">J<span>O</span>S</div>
+                <div class="online-badge">ONLINE</div>
+            </div>
+            <div class="menu-icon">☰</div>
+        </div>
+
+        <!-- Hero Image -->
+        <div class="hero hero-blue">
+            <div>
+                <h2>Jasa Orang Suruhan</h2>
+                <p>Solusi semua kebutuhan Anda!</p>
+            </div>
+        </div>
+
+        <!-- Konten -->
+        <div class="content">
+            <h3 class="section-title">Selamat Datang di JOS</h3>
+            <p class="desc-text">JOS (Jasa Orang Suruhan) membantu pekerjaan Anda. Pilih layanan yang Anda butuhkan, lalu kirim pesanan melalui link booking.</p>
+            
+            <h4 class="section-title" style="font-size: 13px;">Manfaat Menggunakan JOS:</h4>
+            <ul class="benefit-list">
+                <li>Hemat waktu dan tenaga.</li>
+                <li>Layanan beragam (pindahan & angkut barang, TKBM, cleaning, potong rumput, pertukangan, dll).</li>
+                <li>Pemesanan praktis dan mudah.</li>
+                <li>Sesuai dengan kebutuhan Anda.</li>
+                <li>Admin follow-up melalui WhatsApp.</li>
+            </ul>
+
+            <p style="font-size: 12px; font-style: italic; margin-bottom: 15px;">JOS — solusi praktis untuk semua kebutuhan Anda!</p>
+
+            <h4 class="section-title" style="font-size: 13px;">Kategori Layanan</h4>
+            <div class="category-grid">
+                <div class="category-item">
+                    <span class="category-icon">🏠</span>
+                    Rumah
+                </div>
+                <div class="category-item">
+                    <span class="category-icon">🏢</span>
+                    Kantor
+                </div>
+                <div class="category-item">
+                    <span class="category-icon">🎓</span>
+                    Kos
+                </div>
+            </div>
+
+            <div class="bottom-banner">
+                Bersama JOS, semua pasti beres!
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= KARTU 2: LAYANAN ================= -->
+    <div class="card">
+        <!-- Header -->
+        <div class="header-top">
+            <div class="nav-text">Layanan</div>
+            <div class="logo-area">
+                <div class="logo-text">J<span>O</span>S</div>
+                <div class="online-badge">ONLINE</div>
+            </div>
+            <div class="menu-icon">☰</div>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero hero-layanan">
+            <div>
+                <h2>Layanan JOS</h2>
+                <p>Pekerjaan apa pun, kami siap membantu!</p>
+            </div>
+        </div>
+
+        <!-- Konten -->
+        <div class="content">
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <div class="tab active">Semua</div>
+                <div class="tab">🏠 Rumah</div>
+                <div class="tab">🏢 Kantor</div>
+                <div class="tab">🎓 Kos</div>
+            </div>
+
+            <!-- Grid Layanan -->
+            <div class="service-grid">
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Pindahan">
+                    <p>Pindahan & Angkut Barang</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="TKBM">
+                    <p>TKBM</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Cleaning">
+                    <p>Cleaning</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1592419044706-39796d40f98c?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Potong Rumput">
+                    <p>Potong Rumput</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Pertukangan">
+                    <p>Pertukangan</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Jasa Supir">
+                    <p>Jasa Supir</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Perbaikan Perabot">
+                    <p>Perbaikan Perabot</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Jasa Antri">
+                    <p>Jasa Antri</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Cuci Toren">
+                    <p>Cuci Toren</p>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 11px; margin-top: 15px; color: #888;">Geser ke bawah untuk melihat layanan lainnya ↓</p>
+        </div>
+    </div>
+
+    <!-- ================= KARTU 3: TOKO JOS ================= -->
+    <div class="card">
+        <!-- Header -->
+        <div class="header-top">
+            <div class="nav-text">Toko JOS</div>
+            <div class="logo-area">
+                <div class="logo-text">J<span>O</span>S</div>
+                <div class="online-badge">ONLINE</div>
+            </div>
+            <div class="menu-icon">☰</div>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero hero-toko">
+            <div>
+                <h2>Toko JOS</h2>
+                <p>Perlengkapan Packing Pindahan & Pengiriman</p>
+            </div>
+        </div>
+
+        <!-- Konten -->
+        <div class="content">
+            <h3 class="section-title">Produk Toko JOS</h3>
+            
+            <!-- Tabs Produk -->
+            <div class="product-tabs">
+                <div class="prod-tab active">Produk Satuan</div>
+                <div class="prod-tab">Paket Hemat</div>
+            </div>
+
+            <!-- List Produk -->
+            <div class="product-list">
+                <div class="product-item">
+                    <img src="https://images.unsplash.com/photo-1607166452427-7e4477079cb9?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80" class="product-img" alt="Bubble Wrap">
+                    <div class="product-info">
+                        <h4>Bubble Wrap Besar</h4>
+                        <p>125 cm x 50 m</p>
+                        <div class="price">Rp 155.000</div>
+                    </div>
+                    <div style="margin-left: auto; color: #ccc;">›</div>
+                </div>
+
+                <div class="product-item">
+                    <img src="https://images.unsplash.com/photo-1607166452427-7e4477079cb9?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80" class="product-img" alt="Bubble Wrap Kecil">
+                    <div class="product-info">
+                        <h4>Bubble Wrap Kecil</h4>
+                        <p>40 cm x 50 m</p>
+                        <div class="price">Rp 65.000</div>
+                    </div>
+                    <div style="margin-left: auto; color: #ccc;">›</div>
+                </div>
+
+                <div class="product-item">
+                    <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80" class="product-img" alt="Lakban">
+                    <div class="product-info">
+                        <h4>Lakban 6 Pcs</h4>
+                        <p>(putih/bening/coklat)</p>
+                        <div class="price">Rp 45.000</div>
+                    </div>
+                    <div style="margin-left: auto; color: #ccc;">›</div>
+                </div>
+
+                <div class="product-item">
+                    <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-1.2.1&auto=format&fit=crop&w=150&q=80" class="product-img" alt="Dispenser Lakban">
+                    <div class="product-info">
+                        <h4>Dispenser Lakban</h4>
+                        <p>Warna Biru/Oranye</p>
+                        <div class="price">Rp 25.000</div>
+                    </div>
+                    <div style="margin-left: auto; color: #ccc;">›</div>
+                </div>
+            </div>
+
+            <!-- Paket Hemat Banner -->
+            <div style="margin-top: 20px; background: #f9f9f9; padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h4 style="font-size: 13px; margin-bottom: 2px;">Paket Hemat</h4>
+                    <p style="font-size: 11px; color: #666;">Paket Packing 90Gr</p>
+                </div>
+                <button class="btn-lihat">Lihat Semua</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
