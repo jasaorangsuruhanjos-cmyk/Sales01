@@ -1,366 +1,484 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JOS - Jasa Orang Suruhan</title>
-    <style>
-        /* --- RESET & VARIABEL --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="#087ac9" name="theme-color"/>
+<title>JOS — Jasa Orang Suruhan</title>
+<style>
+/* =========================================
+   RESET & VARIABEL WARNA (Menyesuaikan Gambar)
+   ========================================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e8f0f8; /* Latar belakang luar */
+    color: #333;
+    padding: 20px;
+}
 
-        :root {
-            --primary-blue: #0056b3;
-            --dark-blue: #003366;
-            --light-blue: #e6f0fa;
-            --accent-orange: #ff9900;
-            --text-dark: #333;
-            --text-gray: #666;
-            --bg-gray: #f4f6f9;
-        }
+:root {
+    --primary-blue: #0056b3;
+    --dark-blue: #003366;
+    --light-blue: #e6f0fa;
+    --accent-orange: #ff9900;
+    --text-dark: #333;
+    --text-gray: #666;
+    --bg-gray: #f4f6f9;
+    --border-color: #dce4ec;
+}
 
-        body {
-            background-color: var(--bg-gray);
-            color: var(--text-dark);
-            padding: 20px;
-        }
+/* =========================================
+   LAYOUT UTAMA (3 Kolom)
+   ========================================= */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 20px;
+    max-width: 1300px;
+    margin: 0 auto;
+    align-items: start;
+}
 
-        /* --- LAYOUT UTAMA (3 Kolom) --- */
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+/* =========================================
+   KARTU / PANEL UTAMA
+   ========================================= */
+.card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e0e6ed;
+}
 
-        /* --- KARTU / PANEL --- */
-        .card {
-            background: #fff;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-        }
+/* =========================================
+   HEADER ATAS (Logo & Menu)
+   ========================================= */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+}
 
-        /* --- HEADER ATAS (Logo & Menu) --- */
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            border-bottom: 1px solid #eee;
-            background: #fff;
-        }
+.header-top .nav-text {
+    color: var(--primary-blue);
+    font-weight: 700;
+    font-size: 15px;
+}
 
-        .header-top .nav-text {
-            color: var(--primary-blue);
-            font-weight: bold;
-            font-size: 14px;
-        }
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+.logo-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--primary-blue);
+    font-style: italic;
+    letter-spacing: -1px;
+}
 
-        .logo-area img {
-            height: 30px; /* Placeholder logo */
-        }
+.logo-text span {
+    color: var(--accent-orange);
+}
 
-        .logo-text {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--primary-blue);
-            font-style: italic;
-        }
+.online-badge {
+    background: #00c853;
+    color: white;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0,200,83,0.3);
+}
 
-        .logo-text span {
-            color: var(--accent-orange);
-        }
+.menu-icon {
+    font-size: 22px;
+    color: var(--primary-blue);
+    cursor: pointer;
+    padding: 4px;
+}
 
-        .online-badge {
-            background: #00c853;
-            color: white;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
+/* =========================================
+   HERO SECTION (Gambar Banner)
+   ========================================= */
+.hero {
+    position: relative;
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    color: white;
+    overflow: hidden;
+}
 
-        .menu-icon {
-            font-size: 20px;
-            color: var(--primary-blue);
-            cursor: pointer;
-        }
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 86, 179, 0.95), rgba(0, 86, 179, 0.1));
+    z-index: 1;
+}
 
-        /* --- HERO IMAGE SECTION --- */
-        .hero {
-            position: relative;
-            height: 150px;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: flex-end;
-            padding: 15px;
-            color: white;
-        }
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
 
-        .hero-blue {
-            background-image: linear-gradient(to top, rgba(0, 86, 179, 0.9), rgba(0, 86, 179, 0.2)), url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
-            /* Ganti URL di atas dengan gambar asli jika punya */
-        }
-        
-        .hero-layanan {
-            background-image: linear-gradient(to top, rgba(0, 86, 179, 0.9), rgba(0, 86, 179, 0.2)), url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
-        }
+.hero h2 {
+    font-size: 22px;
+    font-weight: 800;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+    margin-bottom: 4px;
+}
 
-        .hero-toko {
-            background-image: linear-gradient(to top, rgba(0, 86, 179, 0.9), rgba(0, 86, 179, 0.2)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
-        }
+.hero p {
+    font-size: 13px;
+    opacity: 0.9;
+}
 
-        .hero h2 {
-            font-size: 20px;
-            font-weight: 800;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
+/* Gambar Placeholder (Anda bisa ganti URL di bawah) */
+.hero-beranda {
+    background-image: url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+    /* Gambar orang pindahan/truk */
+}
+.hero-layanan {
+    background-image: url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+    /* Gambar cleaning/pekerja */
+}
+.hero-toko {
+    background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+    /* Gambar kardus/packing */
+}
 
-        .hero p {
-            font-size: 12px;
-            margin-top: 2px;
-        }
+/* =========================================
+   KONTEN DALAM KARTU
+   ========================================= */
+.content {
+    padding: 20px;
+    flex: 1;
+}
 
-        /* --- KONTEN DALAM KARTU --- */
-        .content {
-            padding: 15px;
-            flex: 1;
-        }
+.section-title {
+    color: var(--primary-blue);
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
 
-        .section-title {
-            color: var(--primary-blue);
-            font-size: 16px;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
+.desc-text {
+    font-size: 13px;
+    color: var(--text-gray);
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
 
-        .desc-text {
-            font-size: 12px;
-            color: var(--text-gray);
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
+/* --- LIST MANFAAT --- */
+.benefit-list {
+    list-style: none;
+    margin-bottom: 20px;
+}
 
-        /* --- LIST MANFAAT --- */
-        .benefit-list {
-            list-style: none;
-            margin-bottom: 15px;
-        }
+.benefit-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
 
-        .benefit-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            font-size: 12px;
-            margin-bottom: 8px;
-            color: var(--text-dark);
-        }
+.benefit-list li::before {
+    content: "✔";
+    color: var(--primary-blue);
+    font-weight: bold;
+    background: #e6f0fa;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+}
 
-        .benefit-list li::before {
-            content: "✔";
-            color: var(--primary-blue);
-            font-weight: bold;
-        }
+/* --- KATEGORI LAYANAN (3 Icon) --- */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
 
-        /* --- KATEGORI LAYANAN (3 Icon) --- */
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
+.category-item {
+    background: #fff;
+    padding: 15px 10px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--primary-blue);
+    cursor: pointer;
+    border: 1px solid #dce4ec;
+    transition: 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
 
-        .category-item {
-            background: var(--light-blue);
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 11px;
-            font-weight: bold;
-            color: var(--dark-blue);
-            cursor: pointer;
-            border: 1px solid #cce0ff;
-            transition: 0.2s;
-        }
+.category-item:hover {
+    background: var(--light-blue);
+    border-color: var(--primary-blue);
+    transform: translateY(-2px);
+}
 
-        .category-item:hover {
-            background: #d0e4ff;
-        }
+.category-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+    display: block;
+}
 
-        .category-icon {
-            font-size: 24px;
-            margin-bottom: 5px;
-            display: block;
-        }
+/* --- BANNER BAWAH --- */
+.bottom-banner {
+    background: linear-gradient(135deg, var(--primary-blue), #007bff);
+    color: white;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: auto;
+    box-shadow: 0 4px 12px rgba(0,86,179,0.3);
+}
 
-        /* --- BANNER BAWAH --- */
-        .bottom-banner {
-            background: linear-gradient(135deg, var(--primary-blue), #007bff);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            font-style: italic;
-            font-weight: bold;
-            font-size: 14px;
-            margin-top: auto;
-        }
+/* =========================================
+   LAYANAN (Grid & Tombol)
+   ========================================= */
+.filter-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
 
-        /* --- TAB FILTER (Layanan) --- */
-        .filter-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid #dce4ec;
+    background: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+    color: var(--text-gray);
+}
 
-        .tab {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            border: 1px solid #ddd;
-            background: #fff;
-            cursor: pointer;
-            white-space: nowrap;
-        }
+.tab.active {
+    background: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue);
+    box-shadow: 0 2px 8px rgba(0,86,179,0.3);
+}
 
-        .tab.active {
-            background: var(--primary-blue);
-            color: white;
-            border-color: var(--primary-blue);
-        }
+.service-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
 
-        /* --- GRID LAYANAN (2 Kolom) --- */
-        .service-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+.service-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: left;
+    padding-bottom: 10px;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+}
 
-        .service-card {
-            background: #fff;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            overflow: hidden;
-            text-align: center;
-            padding-bottom: 8px;
-        }
+.service-card:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 4px 12px rgba(0,86,179,0.1);
+}
 
-        .service-card img {
-            width: 100%;
-            height: 80px;
-            object-fit: cover;
-            background: #ddd;
-        }
+.service-card img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    background: #f0f0f0;
+}
 
-        .service-card p {
-            font-size: 11px;
-            font-weight: bold;
-            margin-top: 5px;
-            color: var(--text-dark);
-        }
+.service-card p {
+    font-size: 12px;
+    font-weight: 700;
+    margin: 8px 10px 0;
+    color: var(--text-dark);
+    line-height: 1.3;
+}
 
-        /* --- TOKO JOS (PRODUK) --- */
-        .product-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #eee;
-        }
+/* =========================================
+   TOKO JOS (Produk)
+   ========================================= */
+.product-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    border-bottom: 2px solid #eee;
+}
 
-        .prod-tab {
-            padding: 8px 15px;
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--text-gray);
-            cursor: pointer;
-        }
+.prod-tab {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-gray);
+    cursor: pointer;
+}
 
-        .prod-tab.active {
-            color: var(--primary-blue);
-            border-bottom: 2px solid var(--primary-blue);
-            margin-bottom: -2px;
-        }
+.prod-tab.active {
+    color: var(--primary-blue);
+    border-bottom: 3px solid var(--primary-blue);
+    margin-bottom: -2px;
+}
 
-        .product-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
-        .product-item {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            border: 1px solid #eee;
-            padding: 10px;
-            border-radius: 8px;
-        }
+.product-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border: 1px solid #eee;
+    padding: 12px;
+    border-radius: 12px;
+    background: #fff;
+    transition: 0.2s;
+}
 
-        .product-img {
-            width: 80px;
-            height: 80px;
-            background: #f0f0f0;
-            border-radius: 5px;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
+.product-item:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
 
-        .product-info h4 {
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
+.product-img {
+    width: 80px;
+    height: 80px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
 
-        .product-info p {
-            font-size: 11px;
-            color: var(--text-gray);
-            margin-bottom: 5px;
-        }
+.product-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text-dark);
+}
 
-        .price {
-            font-size: 14px;
-            font-weight: 900;
-            color: var(--primary-blue);
-        }
+.product-info p {
+    font-size: 12px;
+    color: var(--text-gray);
+    margin-bottom: 6px;
+}
 
-        .btn-lihat {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 11px;
-            cursor: pointer;
-        }
+.price {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--primary-blue);
+}
 
-        /* --- RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+.btn-lihat {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: auto;
+    box-shadow: 0 2px 6px rgba(0,86,179,0.3);
+}
+
+/* =========================================
+   STYLING TAMBAHAN UNTUK PANEL BAWAH (Sesuai File Asli)
+   ========================================= */
+/* Menyembunyikan elemen navigasi asli agar tidak mengganggu layout grid baru */
+.proto-nav, .jos-top-banner { display: none !important; }
+
+/* Styling untuk panel yang ada di dalam file asli agar terlihat rapi di dalam kartu */
+.page-view { display: block !important; }
+.panel { 
+    background: #fff; 
+    border-radius: 12px; 
+    padding: 15px; 
+    margin-top: 15px; 
+    border: 1px solid #eee;
+}
+.panel h2 { color: var(--primary-blue); font-size: 18px; margin-bottom: 10px; }
+.jos-share-panel { 
+    margin-top: 20px; 
+    padding: 15px; 
+    background: #f9fbfd; 
+    border-radius: 12px; 
+    border: 1px solid #eee;
+}
+.jos-social-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.jos-social-btn { 
+    flex: 1 1 45%; 
+    padding: 10px; 
+    border-radius: 8px; 
+    text-align: center; 
+    color: #fff; 
+    text-decoration: none; 
+    font-size: 12px; 
+    font-weight: bold; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 6px;
+}
+.jos-social-btn svg { width: 16px; height: 16px; fill: currentColor; }
+.facebook { background: #1877F2; }
+.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+.threads { background: #000; }
+.tiktok { background: #111; }
+.telegram { background: #229ED9; }
+.whatsapp-admin { background: #25D366; flex: 1 1 100%; }
+
+/* Styling untuk form booking (jika diperlukan) */
+#booking { display: block !important; margin-top: 20px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container { grid-template-columns: 1fr; }
+    .service-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+    .service-grid { grid-template-columns: 1fr; }
+    .product-item { flex-direction: column; text-align: center; }
+    .btn-lihat { margin-left: 0; width: 100%; margin-top: 10px; }
+}
+</style>
 </head>
 <body>
 
@@ -379,8 +497,8 @@
         </div>
 
         <!-- Hero Image -->
-        <div class="hero hero-blue">
-            <div>
+        <div class="hero hero-beranda">
+            <div class="hero-content">
                 <h2>Jasa Orang Suruhan</h2>
                 <p>Solusi semua kebutuhan Anda!</p>
             </div>
@@ -391,7 +509,7 @@
             <h3 class="section-title">Selamat Datang di JOS</h3>
             <p class="desc-text">JOS (Jasa Orang Suruhan) membantu pekerjaan Anda. Pilih layanan yang Anda butuhkan, lalu kirim pesanan melalui link booking.</p>
             
-            <h4 class="section-title" style="font-size: 13px;">Manfaat Menggunakan JOS:</h4>
+            <h4 class="section-title" style="font-size: 14px;">Manfaat Menggunakan JOS:</h4>
             <ul class="benefit-list">
                 <li>Hemat waktu dan tenaga.</li>
                 <li>Layanan beragam (pindahan & angkut barang, TKBM, cleaning, potong rumput, pertukangan, dll).</li>
@@ -400,9 +518,9 @@
                 <li>Admin follow-up melalui WhatsApp.</li>
             </ul>
 
-            <p style="font-size: 12px; font-style: italic; margin-bottom: 15px;">JOS — solusi praktis untuk semua kebutuhan Anda!</p>
+            <p style="font-size: 13px; font-style: italic; margin-bottom: 20px; color: #555;">JOS — solusi praktis untuk semua kebutuhan Anda!</p>
 
-            <h4 class="section-title" style="font-size: 13px;">Kategori Layanan</h4>
+            <h4 class="section-title" style="font-size: 14px;">Kategori Layanan</h4>
             <div class="category-grid">
                 <div class="category-item">
                     <span class="category-icon">🏠</span>
@@ -438,7 +556,7 @@
 
         <!-- Hero -->
         <div class="hero hero-layanan">
-            <div>
+            <div class="hero-content">
                 <h2>Layanan JOS</h2>
                 <p>Pekerjaan apa pun, kami siap membantu!</p>
             </div>
@@ -493,7 +611,7 @@
                     <p>Cuci Toren</p>
                 </div>
             </div>
-            <p style="text-align: center; font-size: 11px; margin-top: 15px; color: #888;">Geser ke bawah untuk melihat layanan lainnya ↓</p>
+            <p style="text-align: center; font-size: 12px; margin-top: 15px; color: #888;">Geser ke bawah untuk melihat layanan lainnya ↓</p>
         </div>
     </div>
 
@@ -511,7 +629,7 @@
 
         <!-- Hero -->
         <div class="hero hero-toko">
-            <div>
+            <div class="hero-content">
                 <h2>Toko JOS</h2>
                 <p>Perlengkapan Packing Pindahan & Pengiriman</p>
             </div>
@@ -536,7 +654,7 @@
                         <p>125 cm x 50 m</p>
                         <div class="price">Rp 155.000</div>
                     </div>
-                    <div style="margin-left: auto; color: #ccc;">›</div>
+                    <button class="btn-lihat">Pesan</button>
                 </div>
 
                 <div class="product-item">
@@ -546,7 +664,7 @@
                         <p>40 cm x 50 m</p>
                         <div class="price">Rp 65.000</div>
                     </div>
-                    <div style="margin-left: auto; color: #ccc;">›</div>
+                    <button class="btn-lihat">Pesan</button>
                 </div>
 
                 <div class="product-item">
@@ -556,7 +674,7 @@
                         <p>(putih/bening/coklat)</p>
                         <div class="price">Rp 45.000</div>
                     </div>
-                    <div style="margin-left: auto; color: #ccc;">›</div>
+                    <button class="btn-lihat">Pesan</button>
                 </div>
 
                 <div class="product-item">
@@ -566,22 +684,8 @@
                         <p>Warna Biru/Oranye</p>
                         <div class="price">Rp 25.000</div>
                     </div>
-                    <div style="margin-left: auto; color: #ccc;">›</div>
+                    <button class="btn-lihat">Pesan</button>
                 </div>
             </div>
 
-            <!-- Paket Hemat Banner -->
-            <div style="margin-top: 20px; background: #f9f9f9; padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h4 style="font-size: 13px; margin-bottom: 2px;">Paket Hemat</h4>
-                    <p style="font-size: 11px; color: #666;">Paket Packing 90Gr</p>
-                </div>
-                <button class="btn-lihat">Lihat Semua</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-</body>
-</html>
+            <!-- Paket Hemat
